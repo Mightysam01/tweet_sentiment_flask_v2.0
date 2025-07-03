@@ -83,22 +83,22 @@ p {
   color: #991b1b;
 }
 
-.example-section {
+.example-section,
+.about-section {
   margin-top: 40px;
   text-align: left;
 }
 
-.example-section h2 {
-  color: #1f2937;
-  margin-bottom: 10px;
-}
-
-.about-section {
-  margin-top: 50px;
-  text-align: left;
-}
-
+.example-section h2,
 .about-section h2 {
   color: #1f2937;
   margin-bottom: 10px;
+}
+
+.example-section ul {
+  padding-left: 20px;
+}
+
+.example-section li {
+  margin-bottom: 8px;
 }
