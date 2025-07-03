@@ -1,6 +1,6 @@
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f9fafb;
+  background-color: #eef2f7; /* Softer background */
   margin: 0;
   padding: 0;
 }
@@ -48,7 +48,12 @@ p {
   transition: background 0.3s ease;
 }
 
-.predict-button:hover {
+.predict-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.predict-button:hover:enabled {
   background-color: #1d4ed8;
 }
 
@@ -83,7 +88,7 @@ p {
   color: #991b1b;
 }
 
-.example-section,
+.examples-section,
 .about-section {
   margin-top: 40px;
   text-align: left;
@@ -93,16 +98,18 @@ p {
   display: block;
 }
 
-.example-section h2,
+.examples-section h2,
 .about-section h2 {
   color: #1f2937;
   margin-bottom: 10px;
 }
 
-.example-section ul {
+.examples-section ul,
+.about-section ul {
   padding-left: 20px;
 }
 
-.example-section li {
+.examples-section li,
+.about-section li {
   margin-bottom: 8px;
 }

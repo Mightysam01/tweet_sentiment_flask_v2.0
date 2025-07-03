@@ -4,15 +4,25 @@ import './App.css';
 function App() {
   const [tweet, setTweet] = useState('');
   const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handlePredict = async () => {
-    const response = await fetch('https://tweet-sentiment-api-v2-0.onrender.com/predict', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: tweet }),
-    });
-    const data = await response.json();
-    setResult(data);
+    setLoading(true);
+    setResult(null);
+    try {
+      const response = await fetch('https://tweet-sentiment-api-v2-0.onrender.com/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: tweet }),
+      });
+      const data = await response.json();
+      setResult(data);
+    } catch (error) {
+      console.error('Prediction failed:', error);
+      setResult({ prediction: null });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const sentimentLabels = {
@@ -26,7 +36,7 @@ function App() {
       <h1>Tweet Sentiment Analyzer v2.0</h1>
 
       <p className="description">
-        Analyze the sentiment of any tweet instantly using our advanced sentiment analysis model,
+        Analyze the sentiment of any tweet instantly using an advanced sentiment analysis model,
         trained on the <strong>TweetEval Sentiment Dataset</strong>. This tool predicts whether a
         tweet expresses a <strong>positive</strong>, <strong>neutral</strong>, or <strong>negative</strong> sentiment.
       </p>
@@ -39,11 +49,11 @@ function App() {
         onChange={(e) => setTweet(e.target.value)}
       ></textarea>
 
-      <button className="predict-button" onClick={handlePredict}>
-        Analyze Sentiment
+      <button className="predict-button" onClick={handlePredict} disabled={loading}>
+        {loading ? 'Predicting...' : 'Analyze Sentiment'}
       </button>
 
-      {result && (
+      {result && result.prediction !== null && (
         <div className="result-box">
           <h3>Prediction Result:</h3>
           <p><strong>Tweet:</strong> {tweet}</p>
@@ -80,7 +90,7 @@ function App() {
         </ul>
         <p>
           You can also explore and compare the original version (v1.0) here:{' '}
-          <a href="https://tweet-sentiment-flask.vercel.app/" target="_blank" rel="noopener noreferrer">
+          <a href="https://tweets-sentiment-flask.vercel.app/" target="_blank" rel="noopener noreferrer">
             Tweet Sentiment Analyzer v1.0
           </a>
         </p>
